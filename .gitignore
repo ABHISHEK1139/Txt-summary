@@ -1,0 +1,41 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Model files (download separately — too large for GitHub)
+models/
+
+# Old model checkpoints
+step-10000-temp/
+step-19500-20260228T103435Z-1-001/
+
+# Training data & checkpoints
+data/
+training/checkpoints/
+training/tokenized_cache/
+
+# Binary tools (platform-specific, install separately)
+tools/
+
+# Uploads
+uploads/
+app/uploads/
+
+# Large binary formats
+*.safetensors
+*.bin
+*.h5
+*.arrow
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Presentation files
+*.pdf
