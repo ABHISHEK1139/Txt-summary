@@ -1,0 +1,23 @@
+# Core web framework
+fastapi
+uvicorn[standard]
+pydantic
+
+# Document extraction
+PyMuPDF
+python-docx
+pytesseract
+pdf2image
+
+# NLP & ML
+nltk
+scikit-learn
+numpy
+torch
+transformers
+
+# Training (optional — only needed for training scripts)
+# datasets
+# accelerate
+# evaluate
+# rouge_score

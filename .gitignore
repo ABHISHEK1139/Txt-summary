@@ -9,10 +9,6 @@ __pycache__/
 # Model files (download separately — too large for GitHub)
 models/
 
-# Old model checkpoints
-step-10000-temp/
-step-19500-20260228T103435Z-1-001/
-
 # Training data & checkpoints
 data/
 training/checkpoints/
@@ -23,7 +19,6 @@ tools/
 
 # Uploads
 uploads/
-app/uploads/
 
 # Large binary formats
 *.safetensors

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Document Assistant</title>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- Marked (Markdown renderer) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- App Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Background Elements -->
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="brand">
+                <span class="material-icons-round">auto_awesome</span>
+                AI Assistant
+            </div>
+            <div class="header-actions">
+                <button class="icon-text-btn" onclick="openAboutModal()" title="About this Project">
+                    <span class="material-icons-round">info</span> About
+                </button>
+                <button class="new-chat" onclick="location.reload()" title="Reset Session">
+                    <span class="material-icons-round">refresh</span> Reset
+                </button>
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div class="chat-area" id="chat-history">
+            <div class="welcome" id="welcome-screen">
+                <h1>Unlock Your Documents</h1>
+                <p>Upload a PDF/DOCX or just copy-paste the text</p>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-box">
+                <button class="icon-btn" onclick="document.getElementById('file-upload').click()" title="Upload File">
+                    <span class="material-icons-round">attach_file</span>
+                </button>
+                <input type="file" id="file-upload" accept=".pdf,.docx,.txt,.md" hidden>
+
+                <textarea id="chat-input" placeholder="Ask anything..." rows="1" oninput="autoResize(this)"></textarea>
+
+                <button class="icon-btn send" id="send-btn" onclick="handleSend()">
+                    <span class="material-icons-round">arrow_upward</span>
+                </button>
+                <button class="icon-btn stop" id="stop-btn" onclick="stopGeneration()"
+                    style="display: none; color: #ff4757;">
+                    <span class="material-icons-round">stop</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div class="modal-overlay" id="about-modal" onclick="handleModalOverlayClick(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <span class="material-icons-round">info</span>
+                    About AI Document Summarizer
+                </div>
+                <button class="modal-close" onclick="closeAboutModal()" title="Close">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="about-section">
+                    <h3><span class="material-icons-round">dataset</span> Dataset Used</h3>
+                    <p>
+                        Trained on the <strong>CNN / DailyMail (v3.0.0)</strong> benchmark dataset consisting of 
+                        <strong>~287,000+</strong> training pairs, <strong>13,368</strong> validation pairs, and <strong>11,490</strong> test samples.
+                    </p>
+                    <div class="tag-group">
+                        <span class="pill-tag">CNN/DailyMail 3.0.0</span>
+                        <span class="pill-tag">287K+ Training Pairs</span>
+                        <span class="pill-tag">Multi-Sentence Highlights</span>
+                    </div>
+                </div>
+
+                <div class="about-section">
+                    <h3><span class="material-icons-round">psychology</span> Model Architecture</h3>
+                    <p>
+                        Powered by a fine-tuned <strong>T5 (Text-to-Text Transfer Transformer)</strong> model 
+                        employing an Encoder-Decoder architecture with multi-head self-attention.
+                    </p>
+                    <ul class="about-list">
+                        <li><strong>Input Prefix:</strong> <code>summarize: &lt;context&gt; &lt;text&gt;</code></li>
+                        <li><strong>Decoding Strategy:</strong> Beam Search (k=4) with length penalty (1.2) and 3-gram repetition penalty</li>
+                        <li><strong>Optimization:</strong> AdamW (LR: 3e-5) with FP16 Mixed-Precision</li>
+                        <li><strong>Evaluation:</strong> ROUGE-1, ROUGE-2, and ROUGE-L</li>
+                    </ul>
+                </div>
+
+                <div class="about-section">
+                    <h3><span class="material-icons-round">account_tree</span> Processing & Extraction Pipeline</h3>
+                    <ul class="about-list">
+                        <li><strong>Document Support:</strong> PDF (PyMuPDF), Word DOCX (python-docx), TXT, and Markdown</li>
+                        <li><strong>OCR Fallback:</strong> Tesseract OCR + Poppler for scanned documents/images</li>
+                        <li><strong>Section Intelligence:</strong> Context-aware chunking with heading preservation for documents of any length</li>
+                        <li><strong>Two-Level Synthesis:</strong> Section-by-section extraction followed by hierarchical summary generation</li>
+                    </ul>
+                </div>
+
+                <div class="about-section">
+                    <h3><span class="material-icons-round">api</span> Developer REST API</h3>
+                    <p>
+                        Full REST API and OpenAPI / Swagger documentation enabled. Connect any external app, script, or frontend.
+                    </p>
+                    <div class="api-links">
+                        <a href="/docs" target="_blank" class="api-btn">
+                            <span class="material-icons-round">open_in_new</span> Swagger UI (/docs)
+                        </a>
+                        <a href="/redoc" target="_blank" class="api-btn">
+                            <span class="material-icons-round">open_in_new</span> ReDoc (/redoc)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App Logic -->
+    <script src="js/app.js"></script>
+</body>
+
+</html>

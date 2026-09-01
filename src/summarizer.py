@@ -30,8 +30,19 @@ _model = None
 _tokenizer = None
 _device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def load_local_model(model_path="../models/final"):
+def load_local_model(model_path=None):
     global _model, _tokenizer
+    if model_path is None:
+        try:
+            from src.config import MODEL_PATH, FALLBACK_MODEL
+            model_path = MODEL_PATH
+            fallback = FALLBACK_MODEL
+        except ImportError:
+            model_path = "models/final"
+            fallback = "t5-small"
+    else:
+        fallback = "t5-small"
+
     if _model is None or _tokenizer is None:
         try:
             _tokenizer = AutoTokenizer.from_pretrained(model_path)
@@ -42,9 +53,9 @@ def load_local_model(model_path="../models/final"):
             print(f"Loaded local model from {model_path} on {_device}")
         except Exception as e:
             print(f"Error loading local model from {model_path}: {e}")
-            print("Falling back to t5-small from huggingface hub")
-            _tokenizer = AutoTokenizer.from_pretrained("t5-small")
-            _model = AutoModelForSeq2SeqLM.from_pretrained("t5-small")
+            print(f"Falling back to {fallback} from huggingface hub")
+            _tokenizer = AutoTokenizer.from_pretrained(fallback)
+            _model = AutoModelForSeq2SeqLM.from_pretrained(fallback)
             _model.to(_device)
             _model.eval()
 

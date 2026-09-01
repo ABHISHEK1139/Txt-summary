@@ -12,7 +12,7 @@ echo [*] Checkpoints saved EVERY epoch
 echo [*] Auto-resumes from latest checkpoint if found
 echo.
 
-cd training
+cd /d "%~dp0training"
 
 :: Check for latest checkpoint automatically
 set RESUME_ARG=
@@ -44,7 +44,7 @@ python summarizer_train.py ^
     --logging_steps 25 ^
     --eval_steps 500
 
-cd ..
+cd /d "%~dp0"
 
 echo.
 echo [*] Training finished! Check "models\" for the final model.

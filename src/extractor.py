@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 # Set tesseract path
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
-# Set poppler path (relative to app/ folder)
+# Set poppler path (relative to project root)
 POPPLER_PATH = os.path.join(os.path.dirname(__file__), '..', 'tools', 'poppler-25.12.0', 'Library', 'bin')
 
 

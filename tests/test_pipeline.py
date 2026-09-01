@@ -1,8 +1,5 @@
 """End-to-end test of the full pipeline: extraction, chunking, OCR, poppler."""
-import sys, os
-script_dir = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(script_dir, 'app'))
-os.chdir(os.path.join(script_dir, 'app'))
+import os
 
 passed = 0
 failed = 0
@@ -43,7 +40,7 @@ except Exception as e:
 print("\n" + "=" * 50)
 print("TEST 3: Poppler (PDF to image)")
 print("=" * 50)
-from extractor import POPPLER_PATH
+from src.extractor import POPPLER_PATH
 test("Poppler dir exists", os.path.isdir(POPPLER_PATH))
 pdftoppm = os.path.join(POPPLER_PATH, 'pdftoppm.exe')
 test("pdftoppm.exe exists", os.path.isfile(pdftoppm))
@@ -60,11 +57,11 @@ try:
     doc.add_paragraph('This is a test paragraph with enough content to verify extraction works correctly.')
     doc.add_heading('Second Section', level=2)
     doc.add_paragraph('This paragraph is under the second heading for multi-section testing.')
-    test_path = '../uploads/test_doc.docx'
-    os.makedirs('../uploads', exist_ok=True)
+    test_path = 'uploads/test_doc.docx'
+    os.makedirs('uploads', exist_ok=True)
     doc.save(test_path)
     
-    from extractor import get_text
+    from src.extractor import get_text
     text = get_text(test_path)
     test("DOCX extracted text", len(text) > 50)
     has_heading = 'Test Heading' in text
@@ -82,7 +79,7 @@ print("\n" + "=" * 50)
 print("TEST 5: TXT Extraction")
 print("=" * 50)
 try:
-    test_txt = '../uploads/test.txt'
+    test_txt = 'uploads/test.txt'
     with open(test_txt, 'w') as f:
         f.write('This is a simple text file test.\nIt has multiple lines.\nThird line here.')
     text = get_text(test_txt)
@@ -97,7 +94,7 @@ print("\n" + "=" * 50)
 print("TEST 6: Context-Aware Chunking")
 print("=" * 50)
 try:
-    from summarizer import _split_into_sections, _extract_doc_overview, _is_heading
+    from src.summarizer import _split_into_sections, _extract_doc_overview, _is_heading
     
     sample = """Introduction
 This is the introduction paragraph that explains the background of the research. It covers multiple topics and provides context.
